@@ -33,9 +33,10 @@ class ListItemCompotent extends Component {
     addToList = () => {
         const lista = this.state.team
 
-        lista.push({ TeamName: this.state.value })
+        lista.push({TeamName: this.state.value })
         this.setState({ team: lista })
         this.setState({ value: '' })
+
     }
 
     handleSumbit() {
@@ -53,8 +54,8 @@ class ListItemCompotent extends Component {
             .then(response => {
                 response.json().then(data => {
                     console.log(data)
-                    let zmienna = '/tournament_matches/' + data.tournamentID
-                    this.setState({ isLoaded: true, tournament: zmienna })
+                    let url = '/tournament_matches/' + data.tournamentID
+                    this.setState({ isLoaded: true, tournament: url })
                     // window.location.replace(url + "/main/subbed");
                 })
             })
