@@ -6,6 +6,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { Typography } from '@material-ui/core';
+import { Formik } from 'formik';
 
 
 class Match extends Component {
@@ -49,10 +50,54 @@ class Match extends Component {
                         {this.state.match.map(row => {
                             return (
                                 <TableRow key={row.matchID}>
-                                    <TableCell align="right">{row.teamName}</TableCell>
-                                    <TableCell align="right">{row.score}</TableCell>
-                                    <TableCell align="right">{row.score1}</TableCell>
-                                    <TableCell align="right">{row.teamName1}</TableCell>
+                                    <TableCell align="center">{row.teamName}</TableCell>
+
+                                    <Formik
+                                    initialValues={{...row}}
+                                    render={({
+                                        values,
+                                        errors,
+                                        touched,
+                                        handleBlur,
+                                        handleChange,
+                                        handleSumbit,
+                                        isSumbitting
+                                    })=>(
+                                        <TableCell align="center">
+                                        <form onSubmit={handleSumbit}>
+                                        <input
+                                        name='score'
+                                        onChange={handleChange}
+                                        value={values.score}
+                                        ></input>
+                                        </form>
+                                        </TableCell>
+                                    )}
+                                    />
+
+                                    <TableCell align="center">
+                                    <Formik
+                                    initialValues={{...row}}
+                                    render={({
+                                        values,
+                                        errors,
+                                        touched,
+                                        handleBlur,
+                                        handleChange,
+                                        handleSumbit,
+                                        isSumbitting
+                                    })=>(
+                                        <form onSubmit={handleSumbit}>
+                                        <input
+                                        name='score1'
+                                        onChange={handleChange}
+                                        value={values.score1}
+                                        ></input>
+                                        </form>
+                                    )}
+                                    />
+                                    </TableCell>
+                                    <TableCell align="center">{row.teamName1}</TableCell>
                                 </TableRow>
                             );
                         })}
