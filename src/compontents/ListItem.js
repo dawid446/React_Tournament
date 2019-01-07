@@ -1,11 +1,23 @@
 import React, { Component } from 'react';
-import { Paper, FormGroup, TextField, Button } from '@material-ui/core';
+import { Paper, FormGroup, TextField, Button, Drawer } from '@material-ui/core';
 import Item from './Item';
 import { Redirect } from 'react-router'
 
+import styled from 'styled-components'
 
+const MyPaper = styled(Paper)`
 
-
+    width: 400px;
+    background: white !important
+    display: inline-block
+`
+const MyTextField = styled(TextField) `
+    &hover:{
+        &before:{
+            borderBottom : red !important
+        }
+    }
+ `
 
 class ListItemCompotent extends Component {
 
@@ -66,10 +78,11 @@ class ListItemCompotent extends Component {
 
             <div>
 
+                <MyPaper>
                 <FormGroup>
-                    <TextField margin="normal" id="filled" label="Tournament" variant="standard" type="text" onChange={this.updateValueTournament.bind(this)} value={this.state.tournamentValue} ></TextField>
+                    <MyTextField margin="normal" id="filled" label="Tournament" variant="standard" type="text" onChange={this.updateValueTournament.bind(this)} value={this.state.tournamentValue} ></MyTextField>
                 </FormGroup>
-                <Paper>
+                <Drawer/>
                     <Item delete={this.removeItem} data={this.state.team} />
                     <FormGroup>
                         <TextField margin="normal" id="filled-name" label="Team" variant="outlined" type='text' onChange={this.updateValue.bind(this)} value={this.state.value}></TextField>
@@ -78,7 +91,7 @@ class ListItemCompotent extends Component {
                         <Button color="default" onClick={this.handleSumbit.bind(this)}>Wyślij na serwer</Button>
                     </FormGroup>
                     {this.state.isLoaded ? <Redirect to={this.state.tournament} /> : null}
-                </Paper>
+                </MyPaper>
 
             </div>
 

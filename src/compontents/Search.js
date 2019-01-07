@@ -1,7 +1,25 @@
 import React, { Component } from 'react';
-import { ListItem, List, ListItemText, ListItemSecondaryAction, IconButton, TextField, Button, Paper, CircularProgress } from '@material-ui/core';
+import { ListItem, List, ListItemText, TextField, Button, Paper, CircularProgress } from '@material-ui/core';
 import { Link } from 'react-router-dom'
+import styled from 'styled-components'
 
+
+const MyButtonColor = styled(Button)`
+    background-color: #282c34 !important
+    margin-right: 15px !important
+`
+
+const SquareForText = styled.div`
+    height: 80px;
+    width: 400px;
+    margin: 0 auto;
+    background: #f45a36;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+`
 class Search extends Component {
     state = {
         tournament: [],
@@ -33,11 +51,14 @@ class Search extends Component {
             return (
                 <div>
                     <Paper>
-                        <TextField type="text" value={this.state.search} onChange={this.updateSearch.bind(this)}></TextField>
-                        <Button color="primary" variant="contained">Szukaj</Button>
-                    </Paper>
+                    <SquareForText>
+                    <TextField style={{margin: 15}} fullWidth type="text" value={this.state.search} onChange={this.updateSearch.bind(this)} label="Search" ></TextField>
+                        <MyButtonColor color="primary" variant="contained" size="medium">Search</MyButtonColor>
+                    </SquareForText>
 
-                    <Paper>
+
+
+
                         <List>
                             {filtredTournament.map((item, i) =>
                                 <ListItem key={i} component={Link} to={`/tournament_matches/${item.tournamentID}`} button>

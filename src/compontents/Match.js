@@ -5,13 +5,27 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { Typography, Button, CircularProgress, TextField, Fab } from '@material-ui/core';
+import { Typography, Button, CircularProgress, TextField, Fab, Snackbar } from '@material-ui/core';
 import { Formik } from 'formik';
-import AddIcon from '@material-ui/icons/Add';
+import AddIcon from '@material-ui/icons/Done';
+import styled from 'styled-components'
+import MySnackbar from './MySnackbar';
 
-const czcionka = {
-    color: 'white',
-  };
+const MyButtonFab = styled(Fab)`
+    margin-top: 15px !important
+    margin-left: 15px !important
+    background-color: #f45a36 !important
+`
+const Header = styled.div`
+    height: 80px;
+    width: 900px;
+    background: #f45a36;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px
+`
 class Match extends Component {
     state = {
         tournament: '',
@@ -20,11 +34,11 @@ class Match extends Component {
     }
 
 
-   statystyka = () =>
-       this.state.match.forEach(key => {
-           console.log(key.teamName)
-           console.log(key.teamName1)
-       })
+    statystyka = () =>
+        this.state.match.forEach(key => {
+            console.log(key.teamName)
+            console.log(key.teamName1)
+        })
 
 
     componentDidMount = () => {
@@ -43,97 +57,124 @@ class Match extends Component {
     }
     render() {
         if (this.state.isLoaded !== true) {
-            return(
-            <div>
-            <CircularProgress color="secondary"></CircularProgress>
-            </div>)
-        }else
-        return (
-            <div>
-            <Typography style={czcionka} component="h2" variant="h1">
-                    {this.state.tournament.tournamentName}
+            return (
+                <div>
+                    <CircularProgress color="secondary"></CircularProgress>
+                </div>)
+        } else
+            return (
+                <div>
                     <Button onClick={this.statystyka.bind(this)}>nacisnij</Button>
+                    <Header>
+                        {this.state.tournament.tournamentName}
 
-                </Typography>
-            <Paper>
-                <Table>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Nazwa drużyny</TableCell>
-                            <TableCell align="center"> Wynik </TableCell>
-                            <TableCell >Nazwa drużyny</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {this.state.match.map(row => {
-                            return (
-                                <TableRow key={row.matchID}>
-                                    <TableCell align="center">{row.teamName}</TableCell>
-                                    <TableCell algin="center">
-                                        <Formik
-                                            initialValues={{ ...row }}
-                                            onSubmit={(values) => { console.log('submitted', values)
-                                            let url = 'https://localhost:44346/api/matches/' + values.matchID
-                                            const options = {
-                                                method: 'PUT',
-                                                body: JSON.stringify(values),
-                                                headers: {
-                                                    'Content-Type': 'application/json'
-                                                }
-                                            }
-                                            fetch(url, options)
-                                                .then(response => {
-                                                    response.json().then(data => {
-                                                        console.log(data)
-                                                    })
-                                                })
-                                        }}
+                    </Header>
+                    <Paper>
+                        <Table>
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>Nazwa drużyny</TableCell>
+                                    <TableCell align="center"> Wynik </TableCell>
 
-                                            render={({
-                                                values,
-                                                errors,
-                                                touched,
-                                                handleBlur,
-                                                handleChange,
-                                                handleSubmit,
-                                                isSumbitting
-                                            }) => (
-
-                                                    <form onSubmit={handleSubmit}>
-                                                        <TextField
-                                                            name='score'
-                                                            onChange={handleChange}
-                                                            value={values.score}
-                                                            variant="outlined"
-                                                            margin="normal"
-                                                        ></TextField>
-
-                                                        <TextField
-                                                            name='score1'
-                                                            onChange={handleChange}
-                                                            value={values.score1}
-                                                            variant="outlined"
-                                                            margin="normal"
-                                                        ></TextField>
-                                                        <Fab type='submit' color="primary">
-                                                        <AddIcon/>
-                                                        </Fab>
-                                                    </form>
-
-                                                )}
-                                        />
-                                    </TableCell>
-                                    <TableCell align="center">{row.teamName1}</TableCell>
+                                    <TableCell >Nazwa drużyny</TableCell>
 
                                 </TableRow>
-                            );
-                        })}
-                    </TableBody>
+                            </TableHead>
+                            <TableBody>
+                                {this.state.match.map(row => {
+                                    return (
+                                        <TableRow key={row.matchID}>
+                                            <TableCell align="center">{row.teamName}</TableCell>
+                                            <TableCell algin="center">
+                                                <Formik
+                                                    initialValues={{ ...row }}
+                                                    onSubmit={(values) => {
+                                                        let url = 'https://localhost:44346/api/matches/' + values.matchID
+                                                        const options = {
+                                                            method: 'PUT',
+                                                            body: JSON.stringify(values),
+                                                            headers: {
+                                                                'Content-Type': 'application/json'
+                                                            }
+                                                        }
+                                                        fetch(url, options)
+                                                            .then(response => {
+                                                                response.json().then(
+                                                                    alert("ok")
 
-                </Table>
-            </Paper>
-            </div>
-        );
+                                                                )
+                                                            })
+                                                    }}
+                                                    validate={(values) => {
+                                                        let errors = {}
+                                                        var numbers = /^[0-9]+$/;
+
+                                                        if(numbers.exec(values.score))
+                                                        {
+                                                            errors.score = "Only Numbers"
+                                                        }
+                                                        // if(values.score1.exec(numbers))
+
+                                                        // {
+                                                        //     errors.score1 = "Only Numbers"
+                                                        // }
+
+                                                        return errors
+                                                    }
+
+                                                    }
+                                                    render={({
+                                                        values,
+                                                        errors,
+                                                        touched,
+                                                        handleBlur,
+                                                        handleChange,
+                                                        handleSubmit,
+                                                        isSumbitting
+                                                    }) => (
+
+                                                            <form onSubmit={handleSubmit}>
+
+                                                                <TextField
+                                                                    error = {errors.score}
+                                                                    label = {errors.score}
+                                                                    name='score'
+                                                                    onChange={handleChange}
+                                                                    value={values.score}
+                                                                    variant="outlined"
+                                                                    margin="normal"
+                                                                ></TextField>
+
+
+                                                                <TextField
+                                                                    error = {errors.score1}
+                                                                    label = {errors.score1}
+                                                                    name='score1'
+                                                                    onChange={handleChange}
+                                                                    value={values.score1}
+                                                                    variant="outlined"
+                                                                    margin="normal"
+                                                                ></TextField>
+
+                                                                <MyButtonFab type='submit' color="primary">
+                                                                    <AddIcon />
+                                                                </MyButtonFab>
+                                                            </form>
+
+                                                        )}
+                                                />
+                                            </TableCell>
+                                            <TableCell align="center">{row.teamName1}</TableCell>
+
+                                        </TableRow>
+                                    );
+                                })}
+                            </TableBody>
+
+                        </Table>
+                    </Paper>
+                </div>
+            );
     }
 }
 
