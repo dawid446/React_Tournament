@@ -17,7 +17,7 @@ const MytText = styled(TextField)`
 
 `
 const Square = styled.div`
-    height: 150px;
+    height: 15vh;
     width: 300px;
     border-radius: 5px;
     background: white

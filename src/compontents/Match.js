@@ -5,11 +5,11 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { Typography, Button, CircularProgress, TextField, Fab, Snackbar } from '@material-ui/core';
+import {  Button, CircularProgress, TextField, Fab} from '@material-ui/core';
 import { Formik } from 'formik';
 import AddIcon from '@material-ui/icons/Done';
 import styled from 'styled-components'
-import MySnackbar from './MySnackbar';
+
 
 const MyButtonFab = styled(Fab)`
     margin-top: 15px !important
@@ -98,18 +98,13 @@ class Match extends Component {
                                                             }
                                                         }
                                                         fetch(url, options)
-                                                            .then(response => {
-                                                                response.json().then(
-                                                                    alert("ok")
-
-                                                                )
-                                                            })
+                                                            .then(response => response.json())
                                                     }}
                                                     validate={(values) => {
                                                         let errors = {}
                                                         var numbers = /^[0-9]+$/;
 
-                                                        if(numbers.exec(values.score))
+                                                        if(numbers.match(values.score))
                                                         {
                                                             errors.score = "Only Numbers"
                                                         }

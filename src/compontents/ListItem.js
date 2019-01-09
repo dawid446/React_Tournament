@@ -1,23 +1,47 @@
 import React, { Component } from 'react';
-import { Paper, FormGroup, TextField, Button, Drawer } from '@material-ui/core';
+import { Paper, FormGroup, TextField, Button, Drawer, Fab } from '@material-ui/core';
 import Item from './Item';
 import { Redirect } from 'react-router'
+import AddIcon from '@material-ui/icons/Add';
 
 import styled from 'styled-components'
 
-const MyPaper = styled(Paper)`
 
-    width: 400px;
-    background: white !important
-    display: inline-block
-`
-const MyTextField = styled(TextField) `
+const MyTextField = styled(TextField)`
     &hover:{
         &before:{
             borderBottom : red !important
         }
     }
  `
+const MyButtonFab = styled(Fab)`
+    background-color: #f45a36 !important
+    color: white !important
+`
+
+const Square = styled.div`
+    background-color: white;
+    min-width: 40vh;
+    display: inline-block
+    min-height: 40vh
+    border-radius: 5px;
+
+    display: flex;
+    flex-direction: column;
+
+ `
+
+const OnBottom = styled.div`
+
+    display: flex;
+    align-items: center
+    margin-top: auto;
+
+ `
+ const ButtonDiv = styled.div`
+
+ `
+
 
 class ListItemCompotent extends Component {
 
@@ -45,7 +69,7 @@ class ListItemCompotent extends Component {
     addToList = () => {
         const lista = this.state.team
 
-        lista.push({TeamName: this.state.value })
+        lista.push({ TeamName: this.state.value })
         this.setState({ team: lista })
         this.setState({ value: '' })
 
@@ -78,20 +102,24 @@ class ListItemCompotent extends Component {
 
             <div>
 
-                <MyPaper>
-                <FormGroup>
-                    <MyTextField margin="normal" id="filled" label="Tournament" variant="standard" type="text" onChange={this.updateValueTournament.bind(this)} value={this.state.tournamentValue} ></MyTextField>
-                </FormGroup>
-                <Drawer/>
-                    <Item delete={this.removeItem} data={this.state.team} />
+                <Square>
                     <FormGroup>
-                        <TextField margin="normal" id="filled-name" label="Team" variant="outlined" type='text' onChange={this.updateValue.bind(this)} value={this.state.value}></TextField>
-                        <Button color="default" onClick={this.addToList.bind(this)}>Dodaj drużynę</Button>
+                        <MyTextField margin="normal" id="filled" label="Tournament" variant="standard" type="text" onChange={this.updateValueTournament.bind(this)} value={this.state.tournamentValue} ></MyTextField>
+                    </FormGroup>
+                    <Drawer />
+                    <Item delete={this.removeItem} data={this.state.team} />
+                    <OnBottom>
+                        <TextField fullWidth id="filled-name" label="Team" variant="outlined" type='text' onChange={this.updateValue.bind(this)} value={this.state.value}></TextField>
+                        <MyButtonFab onClick={this.addToList.bind(this)}>
+                            <AddIcon />
+                        </MyButtonFab>
+                        </OnBottom>
+                    </Square>
 
                         <Button color="default" onClick={this.handleSumbit.bind(this)}>Wyślij na serwer</Button>
-                    </FormGroup>
+
                     {this.state.isLoaded ? <Redirect to={this.state.tournament} /> : null}
-                </MyPaper>
+
 
             </div>
 
