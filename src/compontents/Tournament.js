@@ -1,36 +1,27 @@
 import React, { Component } from 'react';
-import { Paper, TextField, Button, FormGroup } from '@material-ui/core';
+import { TextField, Button, FormGroup} from '@material-ui/core';
 import ListItemCompotent from './ListItem';
 import styled from 'styled-components'
 
+const MyTextField = styled(TextField)`
+    color: white !important
+`
 const StyledButton = styled(Button)`
   background: #f45a36 !important;
-  border-radius: 3px;
-  border: 0;
   color: white;
-  height: 48px;
-  width:300px
-  padding: 0 30px;
-`
-const MytText = styled(TextField)`
-    width: 300px;
+  width: 100%;
+
 
 `
 const Square = styled.div`
-    height: 15vh;
-    width: 300px;
-    border-radius: 5px;
-    background: white
-    position: relative;
-`
-const InSquare = styled.div`
-
-    position: absolute;
-    bottom: 0;
-    left: 0;
+    width : 40vh
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    flex-wrap: wrap;
 
 `
-
 
 
 class Tournament extends Component {
@@ -45,20 +36,25 @@ class Tournament extends Component {
         this.setState({ value: event.target.value })
     }
     render() {
-        if(this.state.showComponent === true)
-        return(<div><ListItemCompotent tournamentName={this.state.value}/></div>)
+        if (this.state.showComponent === true)
+            return (<div><ListItemCompotent tournamentName={this.state.value} /></div>)
         else
-        return (
-            <Square>
+            return (
+                <Square>
+                    <h1> Tournament</h1>
 
-                    <MytText margin="normal" id="filled-name" label="Tournament" variant="standard" type="text" onChange={this.updateValue.bind(this)} value={this.state.value}></MytText>
 
-                    <InSquare>
-                    <StyledButton color="default" onClick={this.onButtonClick.bind(this)}>Add Tournament</StyledButton>
-                    </InSquare>
+                    <MyTextField fullWidth margin="normal" id="filled-name" label="Tournament" variant="standard" type="text" onChange={this.updateValue.bind(this)} value={this.state.value} ></MyTextField>
 
-            </Square>
-        );
+                    <StyledButton onClick={this.onButtonClick.bind(this)}>Add Tournament</StyledButton>
+
+
+
+
+
+                </Square>
+
+            );
     }
 }
 

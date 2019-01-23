@@ -20,25 +20,28 @@ const MyButtonFab = styled(Fab)`
 `
 
 const Square = styled.div`
-    background-color: white;
-    min-width: 40vh;
-    display: inline-block
-    min-height: 40vh
-    border-radius: 5px;
 
     display: flex;
     flex-direction: column;
 
- `
 
+
+
+
+
+ `
+const WihiteSquare = styled.div`
+    background-color: white;
+    min-width: 40vh;
+    min-height: 40vh
+`
 const OnBottom = styled.div`
 
-    display: flex;
-    align-items: center
-    margin-top: auto;
+    align-items: flex-end
+
 
  `
- const ButtonDiv = styled.div`
+const ButtonDiv = styled.div`
 
  `
 
@@ -103,22 +106,27 @@ class ListItemCompotent extends Component {
             <div>
 
                 <Square>
-                    <FormGroup>
-                        <MyTextField margin="normal" id="filled" label="Tournament" variant="standard" type="text" onChange={this.updateValueTournament.bind(this)} value={this.state.tournamentValue} ></MyTextField>
-                    </FormGroup>
+
+                    <MyTextField margin="normal" id="filled" label="Tournament" variant="standard" type="text" onChange={this.updateValueTournament.bind(this)} value={this.state.tournamentValue} ></MyTextField>
+
                     <Drawer />
-                    <Item delete={this.removeItem} data={this.state.team} />
-                    <OnBottom>
-                        <TextField fullWidth id="filled-name" label="Team" variant="outlined" type='text' onChange={this.updateValue.bind(this)} value={this.state.value}></TextField>
-                        <MyButtonFab onClick={this.addToList.bind(this)}>
-                            <AddIcon />
-                        </MyButtonFab>
-                        </OnBottom>
-                    </Square>
+                    <WihiteSquare>
+                        <Item delete={this.removeItem} data={this.state.team} />
+                    </WihiteSquare>
 
-                        <Button color="default" onClick={this.handleSumbit.bind(this)}>Wyślij na serwer</Button>
+                </Square>
 
-                    {this.state.isLoaded ? <Redirect to={this.state.tournament} /> : null}
+                <TextField fullWidth id="filled-name" label="Team" variant="outlined" type='text' onChange={this.updateValue.bind(this)} value={this.state.value}></TextField>
+
+                <MyButtonFab onClick={this.addToList.bind(this)}>
+                    <AddIcon />
+                </MyButtonFab>
+
+
+
+                <Button color="default" onClick={this.handleSumbit.bind(this)}>Wyślij na serwer</Button>
+
+                {this.state.isLoaded ? <Redirect to={this.state.tournament} /> : null}
 
 
             </div>
