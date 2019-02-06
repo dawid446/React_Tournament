@@ -27,7 +27,6 @@ class Search extends Component {
         isLoaded: false
     }
     componentDidMount = () => {
-        
         fetch("https://localhost:44346/api/Tournaments/")
             .then(response => response.json())
             .then(json => this.setState({ tournament: json, isLoaded: true }))

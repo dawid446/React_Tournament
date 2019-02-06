@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ListItem, List, ListItemText, ListItemSecondaryAction, IconButton } from '@material-ui/core';
+import { ListItem, List, ListItemText, ListItemSecondaryAction, IconButton, Divider } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import styled from 'styled-components'
 
@@ -23,6 +23,7 @@ class Item extends Component {
                             </IconButton>
                         </ListItemSecondaryAction>
                     </ListItem>
+
                 )}
             </List>
         );

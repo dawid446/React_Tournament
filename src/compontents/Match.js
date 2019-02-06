@@ -5,7 +5,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import {  Button, CircularProgress, TextField, Fab} from '@material-ui/core';
+import { Button, CircularProgress, TextField, Fab } from '@material-ui/core';
 import { Formik } from 'formik';
 import AddIcon from '@material-ui/icons/Done';
 import styled from 'styled-components'
@@ -24,13 +24,15 @@ const Header = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 15px
+    margin-bottom: 15px;
+    color white;
 `
 class Match extends Component {
     state = {
         tournament: '',
         match: [],
-        isLoaded: false
+        isLoaded: false,
+        isPut: null
     }
 
 
@@ -55,6 +57,7 @@ class Match extends Component {
             .then(response => response.json())
             .then(json => this.setState({ match: json, isLoaded: true }))
     }
+
     render() {
         if (this.state.isLoaded !== true) {
             return (
@@ -75,9 +78,7 @@ class Match extends Component {
                                 <TableRow>
                                     <TableCell>Nazwa drużyny</TableCell>
                                     <TableCell align="center"> Wynik </TableCell>
-
                                     <TableCell >Nazwa drużyny</TableCell>
-
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -98,65 +99,75 @@ class Match extends Component {
                                                             }
                                                         }
                                                         fetch(url, options)
-                                                            .then(response => response.json())
-                                                    }}
-                                                    validate={(values) => {
-                                                        let errors = {}
-                                                        var numbers = /^[0-9]+$/;
+                                                            .then(response=> {
+                                                                if (response.ok)
+                                                                {
+                                                                    response.json();
+                                                                }
+                                                                else{
+                                                                    throw new Error('Something went wrong...');
+                                                                }
+                                                            })
+                                                            .then(data => data.json())
+                                                            .catch(isPut=> this.setState(isPut));
+                                                }
+                                                }
+                                                validate={(values) => {
+                                                    let errors = {}
+                                                    var numbers = /^[0-9]+$/;
 
-                                                        if(numbers.match(values.score))
-                                                        {
-                                                            errors.score = "Only Numbers"
-                                                        }
-                                                        // if(values.score1.exec(numbers))
-
-                                                        // {
-                                                        //     errors.score1 = "Only Numbers"
-                                                        // }
-
-                                                        return errors
+                                                    if (numbers.match(values.score)) {
+                                                        errors.score = "Only Numbers"
                                                     }
+                                                    // if(values.score1.exec(numbers))
 
-                                                    }
-                                                    render={({
-                                                        values,
-                                                        errors,
-                                                        touched,
-                                                        handleBlur,
-                                                        handleChange,
-                                                        handleSubmit,
-                                                        isSumbitting
-                                                    }) => (
+                                                    // {
+                                                    //     errors.score1 = "Only Numbers"
+                                                    // }
 
-                                                            <form onSubmit={handleSubmit}>
+                                                    return errors
+                                                }
 
-                                                                <TextField
-                                                                    error = {errors.score}
-                                                                    label = {errors.score}
-                                                                    name='score'
-                                                                    onChange={handleChange}
-                                                                    value={values.score}
-                                                                    variant="outlined"
-                                                                    margin="normal"
-                                                                ></TextField>
+                                                }
+                                                render={({
+                                                    values,
+                                                    errors,
+                                                    touched,
+                                                    handleBlur,
+                                                    handleChange,
+                                                    handleSubmit,
+                                                    isSumbitting
+                                                }) => (
+
+                                                        <form onSubmit={handleSubmit}>
+
+                                                            <TextField
+                                                                error={errors.score}
+                                                                label={errors.score}
+                                                                name='score'
+                                                                onChange={handleChange}
+                                                                value={values.score}
+                                                                variant="outlined"
+                                                                margin="normal"
+                                                            ></TextField>
 
 
-                                                                <TextField
-                                                                    error = {errors.score1}
-                                                                    label = {errors.score1}
-                                                                    name='score1'
-                                                                    onChange={handleChange}
-                                                                    value={values.score1}
-                                                                    variant="outlined"
-                                                                    margin="normal"
-                                                                ></TextField>
+                                                            <TextField
+                                                                error={errors.score1}
+                                                                label={errors.score1}
+                                                                name='score1'
+                                                                onChange={handleChange}
+                                                                value={values.score1}
+                                                                variant="outlined"
+                                                                margin="normal"
+                                                            ></TextField>
 
-                                                                <MyButtonFab type='submit' color="primary">
-                                                                    <AddIcon />
-                                                                </MyButtonFab>
-                                                            </form>
+                                                            <MyButtonFab type='submit' color="primary">
+                                                                <AddIcon />
+                                                            </MyButtonFab>
+                                                        </form>
 
-                                                        )}
+                                                    )}
                                                 />
                                             </TableCell>
                                             <TableCell align="center">{row.teamName1}</TableCell>

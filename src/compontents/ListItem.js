@@ -3,7 +3,7 @@ import { Paper, FormGroup, TextField, Button, Drawer, Fab } from '@material-ui/c
 import Item from './Item';
 import { Redirect } from 'react-router'
 import AddIcon from '@material-ui/icons/Add';
-
+import {StyledButton} from './Tournament'
 import styled from 'styled-components'
 
 
@@ -13,21 +13,18 @@ const MyTextField = styled(TextField)`
             borderBottom : red !important
         }
     }
+
  `
 const MyButtonFab = styled(Fab)`
     background-color: #f45a36 !important
-    color: white !important
+    color: white !important;
+    margin: 15px
 `
 
 const Square = styled.div`
 
     display: flex;
     flex-direction: column;
-
-
-
-
-
 
  `
 const WihiteSquare = styled.div`
@@ -37,14 +34,20 @@ const WihiteSquare = styled.div`
 `
 const OnBottom = styled.div`
 
-    align-items: flex-end
+    display: flex;
 
 
  `
 const ButtonDiv = styled.div`
 
  `
+ const StyledButton1 = styled(Button)`
+ background-color: #f45a36 !important;
+ color: white;
+ width: 100%;
 
+
+`
 
 class ListItemCompotent extends Component {
 
@@ -70,11 +73,16 @@ class ListItemCompotent extends Component {
         this.setState({ value: event.target.value })
     }
     addToList = () => {
-        const lista = this.state.team
 
-        lista.push({ TeamName: this.state.value })
-        this.setState({ team: lista })
-        this.setState({ value: '' })
+        let str = this.state.value.replace(/ /g, '');
+        if (str != "") {
+            const lista = this.state.team
+
+            lista.push({ TeamName: this.state.value })
+            this.setState({ team: lista })
+            this.setState({ value: '' })
+        }
+
 
     }
 
@@ -102,9 +110,7 @@ class ListItemCompotent extends Component {
 
     render() {
         return (
-
             <div>
-
                 <Square>
 
                     <MyTextField margin="normal" id="filled" label="Tournament" variant="standard" type="text" onChange={this.updateValueTournament.bind(this)} value={this.state.tournamentValue} ></MyTextField>
@@ -116,21 +122,22 @@ class ListItemCompotent extends Component {
 
                 </Square>
 
-                <TextField fullWidth id="filled-name" label="Team" variant="outlined" type='text' onChange={this.updateValue.bind(this)} value={this.state.value}></TextField>
-
-                <MyButtonFab onClick={this.addToList.bind(this)}>
-                    <AddIcon />
-                </MyButtonFab>
+                <OnBottom>
+                    <TextField fullWidth id="filled-name" label="Team" variant="outlined" type='text' onChange={this.updateValue.bind(this)} value={this.state.value}></TextField>
 
 
 
-                <Button color="default" onClick={this.handleSumbit.bind(this)}>Wyślij na serwer</Button>
+                    <MyButtonFab onClick={this.addToList.bind(this)}>
+                        <AddIcon />
+                    </MyButtonFab>
+
+                </OnBottom>
+
+
+                <StyledButton1 color="default" onClick={this.handleSumbit.bind(this)}>Wyślij na serwer</StyledButton1>
 
                 {this.state.isLoaded ? <Redirect to={this.state.tournament} /> : null}
-
-
             </div>
-
 
         );
     }

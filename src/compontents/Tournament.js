@@ -7,7 +7,7 @@ const MyTextField = styled(TextField)`
     color: white !important
 `
 const StyledButton = styled(Button)`
-  background: #f45a36 !important;
+  background-color: #f45a36 !important;
   color: white;
   width: 100%;
 
@@ -21,6 +21,10 @@ const Square = styled.div`
     flex-direction: column;
     flex-wrap: wrap;
 
+`
+const InSquare = styled.div`
+    background-color: white;
+    opcacity: 0.5
 `
 
 
@@ -42,16 +46,11 @@ class Tournament extends Component {
             return (
                 <Square>
                     <h1> Tournament</h1>
-
-
-                    <MyTextField fullWidth margin="normal" id="filled-name" label="Tournament" variant="standard" type="text" onChange={this.updateValue.bind(this)} value={this.state.value} ></MyTextField>
+                    <InSquare>
+                        <MyTextField fullWidth margin="normal" id="filled-name" label="Tournament" variant="standard" type="text" onChange={this.updateValue.bind(this)} value={this.state.value} ></MyTextField>
+                    </InSquare>
 
                     <StyledButton onClick={this.onButtonClick.bind(this)}>Add Tournament</StyledButton>
-
-
-
-
-
                 </Square>
 
             );
