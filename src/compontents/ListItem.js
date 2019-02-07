@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { Paper, FormGroup, TextField, Button, Drawer, Fab } from '@material-ui/core';
+import {TextField, Button, Drawer, Fab } from '@material-ui/core';
 import Item from './Item';
 import { Redirect } from 'react-router'
 import AddIcon from '@material-ui/icons/Add';
-import {StyledButton} from './Tournament'
 import styled from 'styled-components'
 
 
@@ -75,7 +74,7 @@ class ListItemCompotent extends Component {
     addToList = () => {
 
         let str = this.state.value.replace(/ /g, '');
-        if (str != "") {
+        if (str !== "") {
             const lista = this.state.team
 
             lista.push({ TeamName: this.state.value })

@@ -9,6 +9,8 @@ import { Button, CircularProgress, TextField, Fab } from '@material-ui/core';
 import { Formik } from 'formik';
 import AddIcon from '@material-ui/icons/Done';
 import styled from 'styled-components'
+import Snackbar from '@material-ui/core/Snackbar';
+import MySnackbar from './MySnackbar';
 
 
 const MyButtonFab = styled(Fab)`
@@ -32,15 +34,43 @@ class Match extends Component {
         tournament: '',
         match: [],
         isLoaded: false,
-        isPut: null
+        isPut: null,
+        statistic: []
     }
 
 
-    statystyka = () =>
-        this.state.match.forEach(key => {
-            console.log(key.teamName)
-            console.log(key.teamName1)
+    statystyka = () => {
+        const { match, statistic } = this.state;
+
+        match.forEach(v => {
+            if (v.isBreak === false)
+            {
+            statistic.push({teamName:v.teamName})
+            statistic.push({ teamName: v.teamName1 })
+            }
         })
+        match.forEach(key => {
+
+            if (key.isBreak === false) {
+
+
+
+                if (key.score > key.score1) {
+
+
+                }
+                if (key.score === key.score1) {
+
+                }
+
+            }
+        })
+        let a = statistic.find(v => v.teamName === "Dawid");
+        a.win = 1;
+        a.lose = 2
+        console.log();
+
+    }
 
 
     componentDidMount = () => {
@@ -84,8 +114,9 @@ class Match extends Component {
                             <TableBody>
                                 {this.state.match.map(row => {
                                     return (
+
                                         <TableRow key={row.matchID}>
-                                            <TableCell align="center">{row.teamName}</TableCell>
+                                            <TableCell align="center">{row.teamName === "przerwa" ? "" : row.teamName}</TableCell>
                                             <TableCell algin="center">
                                                 <Formik
                                                     initialValues={{ ...row }}
@@ -93,84 +124,91 @@ class Match extends Component {
                                                         let url = 'https://localhost:44346/api/matches/' + values.matchID
                                                         const options = {
                                                             method: 'PUT',
+                                                            credentials: 'include',
                                                             body: JSON.stringify(values),
                                                             headers: {
                                                                 'Content-Type': 'application/json'
                                                             }
                                                         }
                                                         fetch(url, options)
-                                                            .then(response=> {
-                                                                if (response.ok)
-                                                                {
+                                                            .then(response => {
+                                                                if (response.status === 400) {
                                                                     response.json();
                                                                 }
-                                                                else{
+                                                                else {
                                                                     throw new Error('Something went wrong...');
                                                                 }
                                                             })
                                                             .then(data => data.json())
-                                                            .catch(isPut=> this.setState(isPut));
-                                                }
-                                                }
-                                                validate={(values) => {
-                                                    let errors = {}
-                                                    var numbers = /^[0-9]+$/;
-
-                                                    if (numbers.match(values.score)) {
-                                                        errors.score = "Only Numbers"
+                                                            .catch(isPut => this.setState({ isPut: true }));
+                                                            alert("OK");
                                                     }
-                                                    // if(values.score1.exec(numbers))
 
-                                                    // {
-                                                    //     errors.score1 = "Only Numbers"
-                                                    // }
+                                                    }
+                                                    validate={(values) => {
+                                                        let errors = {}
+                                                        var numbers = /^[0-9]+$/;
 
-                                                    return errors
-                                                }
+                                                        if (numbers.match(values.score)) {
+                                                            errors.score = "Only Numbers"
+                                                        }
+                                                        // if(values.score1.exec(numbers))
 
-                                                }
-                                                render={({
-                                                    values,
-                                                    errors,
-                                                    touched,
-                                                    handleBlur,
-                                                    handleChange,
-                                                    handleSubmit,
-                                                    isSumbitting
-                                                }) => (
+                                                        // {
+                                                        //     errors.score1 = "Only Numbers"
+                                                        // }
 
-                                                        <form onSubmit={handleSubmit}>
+                                                        return errors
+                                                    }
 
-                                                            <TextField
-                                                                error={errors.score}
-                                                                label={errors.score}
-                                                                name='score'
-                                                                onChange={handleChange}
-                                                                value={values.score}
-                                                                variant="outlined"
-                                                                margin="normal"
-                                                            ></TextField>
+                                                    }
+                                                    render={({
+                                                        values,
+                                                        errors,
+                                                        touched,
+                                                        handleBlur,
+                                                        handleChange,
+                                                        handleSubmit,
+
+                                                    }) => (
+
+                                                            <form onSubmit={handleSubmit}>
+
+                                                                <TextField
+                                                                    error={errors.score}
+                                                                    label={errors.score}
+                                                                    name='score'
+                                                                    onChange={handleChange}
+                                                                    value={values.score}
+                                                                    variant="outlined"
+                                                                    margin="normal"
+                                                                    disabled={values.isBreak ? true : false}
 
 
-                                                            <TextField
-                                                                error={errors.score1}
-                                                                label={errors.score1}
-                                                                name='score1'
-                                                                onChange={handleChange}
-                                                                value={values.score1}
-                                                                variant="outlined"
-                                                                margin="normal"
-                                                            ></TextField>
+                                                                ></TextField>
 
-                                                            <MyButtonFab type='submit' color="primary">
-                                                                <AddIcon />
-                                                            </MyButtonFab>
-                                                        </form>
 
-                                                    )}
+                                                                <TextField
+                                                                    error={errors.score1}
+                                                                    label={errors.score1}
+                                                                    name='score1'
+                                                                    onChange={handleChange}
+                                                                    value={values.score1}
+                                                                    variant="outlined"
+                                                                    margin="normal"
+                                                                    disabled={values.isBreak ? true : false}
+                                                                ></TextField>
+
+                                                                <MyButtonFab disabled={values.isBreak ? true : false} type='submit' color="primary">
+                                                                    <AddIcon />
+                                                                </MyButtonFab>
+                                                            </form>
+
+                                                        )}
                                                 />
+
                                             </TableCell>
-                                            <TableCell align="center">{row.teamName1}</TableCell>
+                                            <TableCell align="center">{row.teamName1 === "przerwa" ? "" : row.teamName1}</TableCell>
 
                                         </TableRow>
                                     );
@@ -182,6 +220,7 @@ class Match extends Component {
                 </div>
             );
     }
+
 }
 
 export default Match;
