@@ -11,6 +11,9 @@ import AddIcon from '@material-ui/icons/Done';
 import styled from 'styled-components'
 import Snackbar from '@material-ui/core/Snackbar';
 import MySnackbar from './MySnackbar';
+import AppBar from '@material-ui/core/AppBar';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 
 
 const MyButtonFab = styled(Fab)`
@@ -43,10 +46,9 @@ class Match extends Component {
         const { match, statistic } = this.state;
 
         match.forEach(v => {
-            if (v.isBreak === false)
-            {
-            statistic.push({teamName:v.teamName})
-            statistic.push({ teamName: v.teamName1 })
+            if (v.isBreak === false) {
+                statistic.push({ teamName: v.teamName })
+                statistic.push({ teamName: v.teamName1 })
             }
         })
         match.forEach(key => {
@@ -103,12 +105,24 @@ class Match extends Component {
 
                     </Header>
                     <Paper>
+                        <AppBar position="static">
+                            <Tabs
+                                onChange={this.handleChange}
+                                indicatorColor="primary"
+                                textColor="primary"
+                                variant="fullWidth"
+                            >
+                                <Tab label="Wyniki" />
+                                <Tab label="Statiscic" />
+
+                            </Tabs>
+                        </AppBar>
                         <Table>
                             <TableHead>
                                 <TableRow>
-                                    <TableCell>Nazwa drużyny</TableCell>
-                                    <TableCell align="center"> Wynik </TableCell>
-                                    <TableCell >Nazwa drużyny</TableCell>
+                                    <TableCell>Team name</TableCell>
+                                    <TableCell align="center"> Score </TableCell>
+                                    <TableCell >Team name</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -141,7 +155,7 @@ class Match extends Component {
                                                             })
                                                             .then(data => data.json())
                                                             .catch(isPut => this.setState({ isPut: true }));
-                                                            alert("OK");
+                                                        alert("OK");
                                                     }
 
                                                     }
@@ -214,9 +228,10 @@ class Match extends Component {
                                     );
                                 })}
                             </TableBody>
-
                         </Table>
                     </Paper>
+
+
                 </div>
             );
     }
