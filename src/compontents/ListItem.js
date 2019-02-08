@@ -37,9 +37,7 @@ const OnBottom = styled.div`
 
 
  `
-const ButtonDiv = styled.div`
 
- `
  const StyledButton1 = styled(Button)`
  background-color: #f45a36 !important;
  color: white;
@@ -121,18 +119,12 @@ class ListItemCompotent extends Component {
 
                 </Square>
 
-                <OnBottom>
-                    <TextField fullWidth id="filled-name" label="Team" variant="outlined" type='text' onChange={this.updateValue.bind(this)} value={this.state.value}></TextField>
-
-
-
-                    <MyButtonFab onClick={this.addToList.bind(this)}>
-                        <AddIcon />
-                    </MyButtonFab>
-
-                </OnBottom>
-
-
+                    <OnBottom>
+                        <TextField fullWidth id="filled-name" label="Team" variant="outlined" type='text' onChange={this.updateValue.bind(this)} value={this.state.value}></TextField>
+                        <MyButtonFab onClick={this.addToList.bind(this)}>
+                            <AddIcon />
+                        </MyButtonFab>
+                    </OnBottom>
                 <StyledButton1 color="default" onClick={this.handleSumbit.bind(this)}>Wyślij na serwer</StyledButton1>
 
                 {this.state.isLoaded ? <Redirect to={this.state.tournament} /> : null}

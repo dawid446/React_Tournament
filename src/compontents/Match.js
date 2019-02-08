@@ -5,15 +5,12 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { Button, CircularProgress, TextField, Fab } from '@material-ui/core';
+import {TextField, Fab } from '@material-ui/core';
 import { Formik } from 'formik';
 import AddIcon from '@material-ui/icons/Done';
 import styled from 'styled-components'
-import Snackbar from '@material-ui/core/Snackbar';
-import MySnackbar from './MySnackbar';
-import AppBar from '@material-ui/core/AppBar';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
+// import Snackbar from '@material-ui/core/Snackbar';
+// import MySnackbar from './MySnackbar';
 
 
 const MyButtonFab = styled(Fab)`
@@ -21,102 +18,12 @@ const MyButtonFab = styled(Fab)`
     margin-left: 15px !important
     background-color: #f45a36 !important
 `
-const Header = styled.div`
-    height: 80px;
-    width: 900px;
-    background: #f45a36;
-    border-radius: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 15px;
-    color white;
-`
+
 class Match extends Component {
-    state = {
-        tournament: '',
-        match: [],
-        isLoaded: false,
-        isPut: null,
-        statistic: []
-    }
-
-
-    statystyka = () => {
-        const { match, statistic } = this.state;
-
-        match.forEach(v => {
-            if (v.isBreak === false) {
-                statistic.push({ teamName: v.teamName })
-                statistic.push({ teamName: v.teamName1 })
-            }
-        })
-        match.forEach(key => {
-
-            if (key.isBreak === false) {
-
-
-
-                if (key.score > key.score1) {
-
-
-                }
-                if (key.score === key.score1) {
-
-                }
-
-            }
-        })
-        let a = statistic.find(v => v.teamName === "Dawid");
-        a.win = 1;
-        a.lose = 2
-        console.log();
-
-    }
-
-
-    componentDidMount = () => {
-        const id = this.props.match.params.iteamId;
-
-        var urlTournament = 'https://localhost:44346/api/Tournaments/' + id
-        var urlMatch = `https://localhost:44346/api/matches/` + id
-
-        fetch(urlTournament)
-            .then(response => response.json())
-            .then(json => this.setState({ tournament: json }))
-
-        fetch(urlMatch)
-            .then(response => response.json())
-            .then(json => this.setState({ match: json, isLoaded: true }))
-    }
-
     render() {
-        if (this.state.isLoaded !== true) {
             return (
                 <div>
-                    <CircularProgress color="secondary"></CircularProgress>
-                </div>)
-        } else
-            return (
-                <div>
-                    <Button onClick={this.statystyka.bind(this)}>nacisnij</Button>
-                    <Header>
-                        {this.state.tournament.tournamentName}
-
-                    </Header>
                     <Paper>
-                        <AppBar position="static">
-                            <Tabs
-                                onChange={this.handleChange}
-                                indicatorColor="primary"
-                                textColor="primary"
-                                variant="fullWidth"
-                            >
-                                <Tab label="Wyniki" />
-                                <Tab label="Statiscic" />
-
-                            </Tabs>
-                        </AppBar>
                         <Table>
                             <TableHead>
                                 <TableRow>
@@ -126,7 +33,7 @@ class Match extends Component {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {this.state.match.map(row => {
+                                {this.props.match.map(row => {
                                     return (
 
                                         <TableRow key={row.matchID}>
@@ -230,12 +137,9 @@ class Match extends Component {
                             </TableBody>
                         </Table>
                     </Paper>
-
-
                 </div>
             );
-    }
-
+        }
 }
 
 export default Match;
