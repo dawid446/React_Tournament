@@ -7,6 +7,8 @@ import Statistics from './Statistics';
 import styled from 'styled-components'
 import Paper from '@material-ui/core/Paper';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Play from '@material-ui/icons/Category';
+import Stats from '@material-ui/icons/Assignment'
 
 const Header = styled.div`
     height: 80px;
@@ -19,14 +21,17 @@ const Header = styled.div`
     margin-bottom: 15px;
     color white;
 `
-
+const Tabss = styled(Tabs)
+`
+    background-color : #f45a36 !important
+`
 class MainMatch extends Component {
     state = {
-            tournament: '',
-            match: [],
-            isLoaded: false,
-            value: 0
-        }
+        tournament: '',
+        match: [],
+        isLoaded: false,
+        value: 0
+    }
 
 
     componentDidMount = () => {
@@ -55,32 +60,33 @@ class MainMatch extends Component {
                 <div>
                     <CircularProgress color="secondary"></CircularProgress>
                 </div>)
-        } else{
-        return (
-            <div>
-                <Header>
-                    {this.state.tournament.tournamentName}
+        } else {
+            return (
+                <div>
+                    <Header>
+                        {this.state.tournament.tournamentName}
 
-                </Header>
-                <Paper>
-                    <AppBar position="static">
-                        <Tabs
-                            onChange={this.handleChange}
-                            value={value}
+                    </Header>
+                    <Paper>
+                        <AppBar position="static">
+                            <Tabss
+                                onChange={this.handleChange}
+                                value={value}
+                                fullWidth
 
-                        >
-                            <Tab label="Wyniki" />
-                            <Tab label="Statiscic" />
-                        </Tabs>
-                    </AppBar>
-                    {value === 0 && <Match match={this.state.match}></Match>}
-                    {value === 1 && <Statistics match={this.state.match}></Statistics>}
+                            >
+                                <Tab label="Score" icon={<Play />} />
+                                <Tab label="Statiscic" icon={<Stats />} />
+                            </Tabss>
+                        </AppBar>
+                        {value === 0 && <Match match={this.state.match}></Match>}
+                        {value === 1 && <Statistics match={this.state.match}></Statistics>}
 
-                </Paper>
-            </div>
-        );
+                    </Paper>
+                </div>
+            );
+        }
     }
-}
 }
 
 export default MainMatch;

@@ -4,7 +4,7 @@ import ListItemCompotent from './ListItem';
 import styled from 'styled-components'
 
 const MyTextField = styled(TextField)`
-    color: white !important
+
 `
 const StyledButton = styled(Button)`
   background-color: #f45a36 !important;
@@ -22,10 +22,7 @@ const Square = styled.div`
     flex-wrap: wrap;
 
 `
-const InSquare = styled.div`
-    background-color: white;
-    opcacity: 0.5
-`
+
 
 
 class Tournament extends Component {
@@ -46,9 +43,9 @@ class Tournament extends Component {
             return (
                 <Square>
                     <h1> Tournament</h1>
-                    <InSquare>
+
                         <MyTextField fullWidth margin="normal" id="filled-name" label="Tournament" variant="standard" type="text" onChange={this.updateValue.bind(this)} value={this.state.value} ></MyTextField>
-                    </InSquare>
+
 
                     <StyledButton onClick={this.onButtonClick.bind(this)}>Add Tournament</StyledButton>
                 </Square>

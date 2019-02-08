@@ -42,12 +42,13 @@ class Statistics extends Component {
             <div>
              {this.props.match.map(v =>{
                  return(
-                     <ul>
-                         <li>{v.teamName}</li>
-                         <li>{v.teamName1}</li>
-                         <li>{v.score}</li>
-                         <li>{v.score1}</li>
-                     </ul>
+                     <div></div>
+                    //  <ul>
+                    //      <li>{v.teamName}</li>
+                    //      <li>{v.teamName1}</li>
+                    //      <li>{v.score}</li>
+                    //      <li>{v.score1}</li>
+                    //  </ul>
                  )
              })}
             </div>

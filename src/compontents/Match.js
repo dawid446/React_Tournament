@@ -18,7 +18,11 @@ const MyButtonFab = styled(Fab)`
     margin-left: 15px !important
     background-color: #f45a36 !important
 `
+const TableRowStyle = styled(TableRow)
+`
+background-color : ${(props)=> props.isBreak ? 'grey !important' : 'white !important' }
 
+`
 class Match extends Component {
     render() {
             return (
@@ -26,17 +30,16 @@ class Match extends Component {
                     <Paper>
                         <Table>
                             <TableHead>
-                                <TableRow>
+                                {/* <TableRow>
                                     <TableCell>Team name</TableCell>
                                     <TableCell align="center"> Score </TableCell>
                                     <TableCell >Team name</TableCell>
-                                </TableRow>
+                                </TableRow> */}
                             </TableHead>
                             <TableBody>
                                 {this.props.match.map(row => {
                                     return (
-
-                                        <TableRow key={row.matchID}>
+                                        <TableRowStyle isBreak={row.isBreak} key={row.matchID}>
                                             <TableCell align="center">{row.teamName === "przerwa" ? "" : row.teamName}</TableCell>
                                             <TableCell algin="center">
                                                 <Formik
@@ -103,7 +106,8 @@ class Match extends Component {
                                                                     value={values.score}
                                                                     variant="outlined"
                                                                     margin="normal"
-                                                                    disabled={values.isBreak ? true : false}
+
+                                                                    type={values.isBreak ? "hidden" : "text"}
 
 
                                                                 ></TextField>
@@ -117,12 +121,14 @@ class Match extends Component {
                                                                     value={values.score1}
                                                                     variant="outlined"
                                                                     margin="normal"
-                                                                    disabled={values.isBreak ? true : false}
+                                                                    type={values.isBreak ? "hidden" : "text"}
                                                                 ></TextField>
 
+                                                                {values.isBreak ? "" :
                                                                 <MyButtonFab disabled={values.isBreak ? true : false} type='submit' color="primary">
                                                                     <AddIcon />
-                                                                </MyButtonFab>
+                                                                </MyButtonFab>}
+
                                                             </form>
 
                                                         )}
@@ -131,7 +137,7 @@ class Match extends Component {
                                             </TableCell>
                                             <TableCell align="center">{row.teamName1 === "przerwa" ? "" : row.teamName1}</TableCell>
 
-                                        </TableRow>
+                                        </TableRowStyle>
                                     );
                                 })}
                             </TableBody>
