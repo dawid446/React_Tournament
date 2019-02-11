@@ -89,8 +89,6 @@ class Match extends Component {
                                                     render={({
                                                         values,
                                                         errors,
-                                                        touched,
-                                                        handleBlur,
                                                         handleChange,
                                                         handleSubmit,
 

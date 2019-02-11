@@ -50,11 +50,12 @@ class Search extends Component {
             );
             return (
                 <div>
-                    <Paper>
+
                     <SquareForText>
                     <TextField style={{margin: 15}} fullWidth type="text" value={this.state.search} onChange={this.updateSearch.bind(this)} label="Search" ></TextField>
                         <MyButtonColor color="primary" variant="contained" size="medium">Search</MyButtonColor>
                     </SquareForText>
+                    <Paper>
                         <List>
                             {filtredTournament.map((item, i) =>
                                 <ListItem key={i} component={Link} to={`/tournament_matches/${item.tournamentID}`} button>
