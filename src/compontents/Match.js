@@ -20,31 +20,34 @@ const MyButtonFab = styled(Fab)`
 `
 const TableRowStyle = styled(TableRow)
 `
-background-color : ${(props)=> props.isBreak ? 'grey !important' : 'white !important' }
+background-color : ${(props)=> props.isbreak ? 'grey !important' : 'white !important' }
 
 `
 class Match extends Component {
+    constructor(props)
+    {
+        super(props);
+        this.state ={
+            match: this.props.match
+        }
+    }
+
     render() {
             return (
                 <div>
                     <Paper>
                         <Table>
-                            <TableHead>
-                                {/* <TableRow>
-                                    <TableCell>Team name</TableCell>
-                                    <TableCell align="center"> Score </TableCell>
-                                    <TableCell >Team name</TableCell>
-                                </TableRow> */}
-                            </TableHead>
+
                             <TableBody>
-                                {this.props.match.map(row => {
+                                {this.state.match.map(row => {
                                     return (
-                                        <TableRowStyle isBreak={row.isBreak} key={row.matchID}>
+                                        <TableRowStyle isbreak={row.isBreak ? "break" : ""} key={row.matchID}>
                                             <TableCell align="center">{row.teamName === "przerwa" ? "" : row.teamName}</TableCell>
                                             <TableCell algin="center">
                                                 <Formik
                                                     initialValues={{ ...row }}
                                                     onSubmit={(values) => {
+                                                        values.isPlayed = true;
                                                         let url = 'https://localhost:44346/api/matches/' + values.matchID
                                                         const options = {
                                                             method: 'PUT',
@@ -55,16 +58,8 @@ class Match extends Component {
                                                             }
                                                         }
                                                         fetch(url, options)
-                                                            .then(response => {
-                                                                if (response.status === 400) {
-                                                                    response.json();
-                                                                }
-                                                                else {
-                                                                    throw new Error('Something went wrong...');
-                                                                }
-                                                            })
-                                                            .then(data => data.json())
-                                                            .catch(isPut => this.setState({ isPut: true }));
+                                                            .then(data => console.log(data.json()))
+
                                                         alert("OK");
                                                     }
 
@@ -83,31 +78,24 @@ class Match extends Component {
                                                         // }
 
                                                         return errors
-                                                    }
-
+                                                        }
                                                     }
                                                     render={({
                                                         values,
                                                         errors,
                                                         handleChange,
                                                         handleSubmit,
-
                                                     }) => (
-
                                                             <form onSubmit={handleSubmit}>
-
                                                                 <TextField
                                                                     error={errors.score}
                                                                     label={errors.score}
                                                                     name='score'
                                                                     onChange={handleChange}
-                                                                    value={values.score}
+                                                                    value={values.score ===null ? "" : values.score}
                                                                     variant="outlined"
                                                                     margin="normal"
-
                                                                     type={values.isBreak ? "hidden" : "text"}
-
-
                                                                 ></TextField>
 
 
@@ -116,7 +104,7 @@ class Match extends Component {
                                                                     label={errors.score1}
                                                                     name='score1'
                                                                     onChange={handleChange}
-                                                                    value={values.score1}
+                                                                    value={values.score1 ===null ? "" : values.score1}
                                                                     variant="outlined"
                                                                     margin="normal"
                                                                     type={values.isBreak ? "hidden" : "text"}
@@ -126,15 +114,12 @@ class Match extends Component {
                                                                 <MyButtonFab disabled={values.isBreak ? true : false} type='submit' color="primary">
                                                                     <AddIcon />
                                                                 </MyButtonFab>}
-
                                                             </form>
-
                                                         )}
                                                 />
 
                                             </TableCell>
                                             <TableCell align="center">{row.teamName1 === "przerwa" ? "" : row.teamName1}</TableCell>
-
                                         </TableRowStyle>
                                     );
                                 })}

@@ -65,7 +65,6 @@ class MainMatch extends Component {
                 <div>
                     <Header>
                         {this.state.tournament.tournamentName}
-
                     </Header>
                     <Paper>
                         <AppBar position="static">
@@ -73,7 +72,6 @@ class MainMatch extends Component {
                                 onChange={this.handleChange}
                                 value={value}
                                 fullWidth
-
                             >
                                 <Tab label="Score" icon={<Play />} />
                                 <Tab label="Statiscic" icon={<Stats />} />
