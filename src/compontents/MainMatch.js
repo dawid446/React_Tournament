@@ -19,11 +19,11 @@ const Header = styled.div`
     align-items: center;
     justify-content: center;
     margin-bottom: 15px;
-    color white;
+    color: white;
 `
 const Tabss = styled(Tabs)
 `
-    background-color : #f45a36 !important
+    background-color : #f45a36 !important;
 `
 class MainMatch extends Component {
     state = {

@@ -5,8 +5,8 @@ import styled from 'styled-components'
 
 
 const MyButtonColor = styled(Button)`
-    background-color: #282c34 !important
-    margin-right: 15px !important
+    background-color: #282c34 !important;
+    margin-right: 15px !important;
 `
 
 const SquareForText = styled.div`

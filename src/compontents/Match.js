@@ -14,9 +14,9 @@ import styled from 'styled-components'
 
 
 const MyButtonFab = styled(Fab)`
-    margin-top: 15px !important
-    margin-left: 15px !important
-    background-color: #f45a36 !important
+    margin-top: 15px !important;
+    margin-left: 15px !important;
+    background-color: #f45a36 !important;
 `
 const TableRowStyle = styled(TableRow)
 `
